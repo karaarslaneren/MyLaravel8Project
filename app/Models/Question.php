@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
-    
+    protected $guarded = [];
+    protected $fillable=
+    [
+        'question',
+        'image',
+        'quiz_id'
+
+    ];
     public function answers()
 {
     return $this->hasMany(Answer::class,'question_id','id');

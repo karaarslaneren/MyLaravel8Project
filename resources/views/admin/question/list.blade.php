@@ -5,7 +5,8 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">
-                <a href="{{route('questions.create',$quiz->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                <a href="{{route('questions.create',$quiz->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="{{route('quizzes.index',$quiz->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-reply"></i> Geri Dön</a>
             </h5>
         </div>
         <table class="table table-bordered">
@@ -34,7 +35,7 @@
                             <td class="text-success">{{ substr($answer->correct_answer,-1) }}. Cevap</td>
                         @endforeach
                         <td style="display: contents;">
-                            <a href="{{route('quizzes.edit',$question->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="{{route('quizzes.edit',$question->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pen-fancy"></i></a>
                             <a href="{{route('quizzes.destroy',$question->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
