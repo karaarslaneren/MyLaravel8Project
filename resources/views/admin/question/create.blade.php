@@ -1,8 +1,8 @@
 <x-app-layout>
-	<x-slot name="header">{{$quiz->title}} için yeni soru oluştur</x-slot>
+	<x-slot name="header">Yeni soru oluştur</x-slot>
 	<div class="card">
         <div class="card-body">
-            <form method="POST" action="{{route('questions.store',$quiz->id)}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('questions.store')}}" enctype="multipart/form-data">
             	@csrf
             	<div class="form-group ">
             		<label>Soru</label>
@@ -12,6 +12,15 @@
             		<label>Fotoğraf</label>
             		<input type="file" name="image" class="form-control">
             	</div>
+                <div class="form-group ">
+                    <select name="quiz_id">
+                        <option>Quiz Seçiniz.</option>
+                            @foreach($quizzes as $quiz)
+                            <option value="{{$quiz->id}}">{{$quiz->id}}-{{$quiz->title}}</option>
+                            @endforeach
+                    </select>
+                </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group ">

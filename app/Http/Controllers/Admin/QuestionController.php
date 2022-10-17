@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Answer;
-use App\Http\Requests\QuestionCreateRequest;
+use App\Models\Question;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\QuestionCreateRequest;
+use App\Http\Requests\QuestionUpdateRequest;
 
 class QuestionController extends Controller
 {
@@ -15,11 +17,10 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $quiz = Quiz::whereId($id)->with(['questions','questions.answers'])->first() ?? abort(404,'Quiz Bulunamadı');
-
-        return view('admin.question.list',compact('quiz'));
+        $questions = Question::paginate(20);
+        return view('admin.question.list',compact('questions'));
     }
 
     /**
@@ -27,10 +28,10 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $quiz = Quiz::find($id);
-        return view('admin.question.create',compact('quiz'));
+        $quizzes = Quiz::all();
+        return view('admin.question.create',compact('quizzes'));
     }
 
     /**
@@ -39,8 +40,9 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(QuestionCreateRequest $request,$id)
+    public function store(QuestionCreateRequest $request)
     {
+
         if($request->hasFile('image'))
         {
             $fileName = Str::slug($request->question).'.'.$request->image->extension();
@@ -48,17 +50,19 @@ class QuestionController extends Controller
             $request->image->move(public_path('/uploads'),$fileName);
             $request->image=$fileNameWithUpload;
         }
-        $quiz = Quiz::find($id);
-        $question = $quiz->questions()->create(['question' => $request->question,'image'=>$request->image,'quiz_id'=> $request->quiz_id]); 
-        $question->answers()->create(
-            [
-                'answer1'=>$request->answer1,
-                'answer2'=>$request->answer2,
-                'answer3'=>$request->answer3,
-                'answer4'=>$request->answer4,
-                'correct_answer'=>$request->correct_answer,
+        
+        
+        $question_id = Question::create($request->post());
+        Answer::create(
+            [   
+                'question_id' => $question_id->id,
+                'answer1' => $request->answer1,
+                'answer2' => $request->answer2,
+                'answer3' => $request->answer3,
+                'answer4' => $request->answer4,
+                'correct_answer' => $request->correct_answer
             ]);
-        return redirect()->route('questions.index',$id)->withSuccess('Soru Başarıyla Eklendi');
+        return redirect()->route('questions.index')->withSuccess('Soru Başarıyla Eklendi');
 
     }
 
@@ -68,10 +72,12 @@ class QuestionController extends Controller
      * @param  \App\Models\question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show($quiz_id,$id)
+    public function show(question $question)
     {
-        return $quiz_id.'-'.$id;
+       //
+
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -79,9 +85,10 @@ class QuestionController extends Controller
      * @param  \App\Models\question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(question $question)
+    public function edit($id)
     {
-        //
+        $question = Question::find($id) ?? abort(404,'Quiz Bulunamadı');
+        return view('admin.question.edit',compact('question'));
     }
 
     /**
@@ -91,9 +98,19 @@ class QuestionController extends Controller
      * @param  \App\Models\question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, question $question)
+    public function update(QuestionUpdateRequest $request,question $question)
     {
-        //
+        
+        Quiz::find($question->quiz_id)->questions($question->id)->update(['question' => $request->question,'image'=>$question->image,'quiz_id'=> $question->quiz_id]); 
+        $question->answers()->first()->update(
+            [
+                'answer1'=>$request->answer1,
+                'answer2'=>$request->answer2,
+                'answer3'=>$request->answer3,
+                'answer4'=>$request->answer4,
+                'correct_answer'=>$request->correct_answer,
+            ]);
+        return redirect()->route('questions.index')->withSuccess('Soru Başarıyla Güncellendi');
     }
 
     /**
@@ -104,6 +121,6 @@ class QuestionController extends Controller
      */
     public function destroy(question $question)
     {
-        //
+        $question()->delete();
     }
 }

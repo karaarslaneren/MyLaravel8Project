@@ -10,6 +10,8 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +37,7 @@
                 </header>
             @endif
 
-            <div class="py-6">
+            <div class="py-6 w-100 h-100">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     @if($errors -> any())
                         <div class="alert alert-danger">
@@ -46,9 +48,14 @@
                     @endif
 
                     @if(session('success'))
-                        <div class="alert alert-success">
-                        <i class="fa fa-check"></i>
-                        {{session('success')}}
+                        <script>
+                            Swal.fire
+                            (
+                                'Güncelleme Başarılı!',
+                                'Güncelleme Başarılı!',
+                                'success'
+                            )
+                        </script>
                     </div>
                     @endif
 

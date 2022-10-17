@@ -6,6 +6,7 @@
         <div class="card-body">
             <h5 class="card-title">
                 <a href="{{route('quizzes.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                <a href="{{url('/panel')}}" class="btn btn-sm btn-primary"><i class="fa fa-reply"></i> Geri Dön</a>
             </h5>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde tempore corporis provident enim facilis omnis sapiente cum molestias et ab quam, laudantium, explicabo, dolore. Qui eos autem amet quos aliquam.
         </div>
@@ -25,7 +26,7 @@
                         <td>{{ $quiz->status }}</td>
                         <td>{{ $quiz->finished_at }}</td>
                         <td>
-                            <a href="{{route('questions.index',$quiz->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-question"></i></a>
+                            <a href="{{route('quizzes.show',$quiz->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-question"></i></a>
                             <a href="{{route('quizzes.edit',$quiz->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pen-fancy"></i></a>
                             <a href="{{route('quizzes.destroy',$quiz->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
                         </td>
