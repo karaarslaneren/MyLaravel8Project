@@ -15,6 +15,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            * {box-sizing: border-box;}
+        </style>
 
         <!-- Styles -->
         @livewireStyles
@@ -52,11 +55,10 @@
                             Swal.fire
                             (
                                 'Güncelleme Başarılı!',
-                                'Güncelleme Başarılı!',
+                                'İşlem Başarıyla Gerçekleşti',
                                 'success'
                             )
                         </script>
-                    </div>
                     @endif
 
                     {{ $slot }}

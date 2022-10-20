@@ -35,7 +35,7 @@ class QuizCreateRequest extends FormRequest
         [
             'title' => 'Quiz Başlığı',
             'description' => 'Quiz Açıklama',
-            'finished_at' => 'Bitiş Tarihi'
+            'finished_at' => 'Bitiş Tarihi',
         ];
     }
 }

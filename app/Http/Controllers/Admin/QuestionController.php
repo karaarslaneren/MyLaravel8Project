@@ -74,7 +74,7 @@ class QuestionController extends Controller
      */
     public function show(question $question)
     {
-       //
+       return view ('admin.question.show');
 
     }
 
@@ -121,6 +121,8 @@ class QuestionController extends Controller
      */
     public function destroy(question $question)
     {
-        $question()->delete();
+        $question->delete();
+        return redirect()->route('questions.index')->withSuccess('Soru silme işlemi başarı ile gerçekleştirildi.');
+ 
     }
 }

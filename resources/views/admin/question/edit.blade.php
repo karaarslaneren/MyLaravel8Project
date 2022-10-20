@@ -12,10 +12,12 @@
             	</div>
             	<div class="form-group ">
             		<label>Fotoğraf</label>
-                    <a href="{{asset($question->image)}}"target="_blank">
-                        <img src="{{asset($question->image)}}" 
-                    style="width:200px">
-                    </a>
+                    @if($questions->image)
+                        <a href="{{asset($question->image)}}"target="_blank">
+                            <img src="{{asset($question->image)}}" 
+                        style="width:200px">
+                        </a>
+                    @endif
                     
             		<input type="file" name="image" class="form-control">
             	</div>
