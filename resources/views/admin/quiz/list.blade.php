@@ -4,11 +4,32 @@
     </x-slot>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                <a href="{{route('quizzes.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Yeni Ekle</a>
-                <a href="{{url('/panel')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
-            </h5>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde tempore corporis provident enim facilis omnis sapiente cum molestias et ab quam, laudantium, explicabo, dolore. Qui eos autem amet quos aliquam.
+            
+            <form method="GET" action=" ">
+                <h5 class="card-title float-right">
+                    <a href="{{url('/panel')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
+                    <a href="{{route('quizzes.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                </h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" name="title" placeholder="Quiz Adı" class="form-control" value="{{request()->get('title')}}">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" onchange="this.form.submit()" name="status">
+                            <option value="">Durum Seçiniz</option>
+                            <option @if(request()->get('status')=='publish') selected @endif value="publish">Aktif</option>
+                            <option @if(request()->get('status')=='passive') selected @endif value="passive">Pasif</option>
+                            <option @if(request()->get('status')=='draft') selected @endif value="draft">Taslak</option>
+                        </select>
+                    </div>
+                    @if(request()->get('title') || request()->get('status'))
+                        <div class="col-md-3">
+                            <a href="{{route('quizzes.index')}}" class="btn btn-secondary">Sıfırla</a>
+                        </div>
+                    @endif
+                </div>
+                
+            </form>
         </div>
         <table class="table table-bordered">
             <thead>
@@ -64,6 +85,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{$quizzes->links()}}
+        {{$quizzes->withQueryString()->links()}}
     </div>
 </x-app-layout>

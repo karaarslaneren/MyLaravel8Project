@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Http\Requests\QuizCreateRequest;
 use App\Http\Requests\QuizUpdateRequest;
 
+
 class QuizController extends Controller
 {
     /**
@@ -17,9 +18,18 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $quizzes = Quiz::withCount('questions')->paginate(5);
+        $quizzes = Quiz::withCount('questions');
+        if($request -> get('title'))
+        {
+            $quizzes= $quizzes->where('title','LIKE',"%".$request->get('title')."%");
+        }
+        if($request -> get('status'))
+        {
+            $quizzes= $quizzes->where('status',$request->get('status'));
+        }
+        $quizzes = $quizzes->paginate(5);
         return view('admin.quiz.list',compact('quizzes'));
     }
 
@@ -76,11 +86,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(QuizUpdateRequest $request, $id)
+    public function update(QuizUpdateRequest $request,Quiz $quiz)
     {
-        $quiz = Quiz::find($id) ?? abort(404,'Quiz Bulunamadı');
-        
-        Quiz::where('id',$id)->update($request->except(['_method','_token']));
+        $quiz->update($request->except(['_method','_token']));
         return redirect()->route('quizzes.index')->withSuccess('Quiz güncelleme işlemi başarı ile gerçekleştirildi.'); 
     }
 

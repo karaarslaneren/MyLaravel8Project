@@ -2,10 +2,6 @@
 	<x-slot name="header">{{$quiz->title}}</x-slot>
     <table class="table table-bordered">
         <div class="card-body">
-            <h5 class="card-title">
-                <a href="{{route('questions.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Yeni Ekle</a>
-                <a href="{{url('/panel')}}" class="btn btn-sm btn-primary"><i class="fa fa-reply"></i> Geri Dön</a>
-            </h5>
         </div>
             <thead>
                 <tr>

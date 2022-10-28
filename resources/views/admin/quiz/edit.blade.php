@@ -12,7 +12,7 @@
             	</div>
             	<div class="form-group ">
             		<label>Quiz Açıklama</label>
-            		<textarea name="description" class="form-control" rows="4">{{$quiz->title}}</textarea>
+            		<textarea name="description" class="form-control" rows="4">{{$quiz->description}}</textarea>
             	</div>
                 <div class="form-group">
                     <label>Quiz Durumu</label>

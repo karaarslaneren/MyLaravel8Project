@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use Cviebrock\EloquentSluggable\Sluggable;
 class Quiz extends Model
 {
     use HasFactory;
-    protected $fillable=['title','description','finished_at'];
+    use Sluggable;
+    protected $fillable=['title','description','finished_at','slug','status'];
     protected $dates=['finished_at'];
 
     public function getFinishedAtAttribute($date){
@@ -25,5 +26,13 @@ class Quiz extends Model
             'id', // Local key on the projects table...
             'id' // Local key on the environments table...
         );
+    }
+     public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
