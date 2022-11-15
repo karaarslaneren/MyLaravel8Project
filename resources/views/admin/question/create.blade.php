@@ -2,7 +2,7 @@
 	<x-slot name="header">Yeni soru oluştur</x-slot>
 	<div class="card">
         <div class="card-body">
-            <form method="POST" action="{{route('questions.store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('questions.store')}}" enctype="multipart/form-data" enctype="multipart/form-data">
             	@csrf
             	<div class="form-group ">
             		<label>Soru</label>

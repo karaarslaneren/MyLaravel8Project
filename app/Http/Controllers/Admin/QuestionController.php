@@ -48,7 +48,7 @@ class QuestionController extends Controller
             $fileName = Str::slug($request->question).'.'.$request->image->extension();
             $fileNameWithUpload = 'uploads/'.$fileName;
             $request->image->move(public_path('/uploads'),$fileName);
-            $request->image=$fileNameWithUpload;
+            $request->merge(['image'=>$fileNameWithUpload]);
         }
         
         
@@ -60,6 +60,7 @@ class QuestionController extends Controller
                 'answer2' => $request->answer2,
                 'answer3' => $request->answer3,
                 'answer4' => $request->answer4,
+                'image' => $request->image,
                 'correct_answer' => $request->correct_answer
             ]);
         return redirect()->route('questions.index')->withSuccess('Soru Başarıyla Eklendi');
@@ -100,8 +101,19 @@ class QuestionController extends Controller
      */
     public function update(QuestionUpdateRequest $request,question $question)
     {
-        
-        Quiz::find($question->quiz_id)->questions($question->id)->update(['question' => $request->question,'image'=>$question->image,'quiz_id'=> $question->quiz_id]); 
+        if($request->hasFile('image'))
+        {
+            $fileName = Str::slug($request->question).'.'.$request->image->extension();
+            $fileNameWithUpload = 'uploads/'.$fileName;
+            $request->image->move(public_path('/uploads'),$fileName);
+            $image = $request->merge(['image'=>$fileNameWithUpload]);
+            $path = 'uploads/'.$fileName;
+        }
+
+        Question::whereId($question->id)->update(
+            ['question' => $request->question,
+            'image' => $path ?? $question->image,
+            'quiz_id'=> $question->quiz_id]); 
         $question->answers()->first()->update(
             [
                 'answer1'=>$request->answer1,

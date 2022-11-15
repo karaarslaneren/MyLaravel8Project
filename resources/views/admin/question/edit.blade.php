@@ -12,7 +12,7 @@
             	</div>
             	<div class="form-group ">
             		<label>Fotoğraf</label>
-                    @if($questions->image)
+                    @if($question->image)
                         <a href="{{asset($question->image)}}"target="_blank">
                             <img src="{{asset($question->image)}}" 
                         style="width:200px">
