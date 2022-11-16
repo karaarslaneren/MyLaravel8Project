@@ -49,16 +49,11 @@
                             @endforeach
                         </div>
                     @endif
-
                     @if(session('success'))
-                        <script>
-                            Swal.fire
-                            (
-                                'Güncelleme Başarılı!',
-                                'İşlem Başarıyla Gerçekleşti',
-                                'success'
-                            )
-                        </script>
+                        <div class="alert alert-success">
+                            <i class="fa fa-check"> </i>
+                            {{session(('success'))}}
+                        </div>
                     @endif
 
                     {{ $slot }}

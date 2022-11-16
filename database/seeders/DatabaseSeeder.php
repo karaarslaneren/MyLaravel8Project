@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
           QuizSeeder::class,
           QuestionSeeder::class,
           UseranswersSeeder::class,
+          ResultSeeder::class,
       ]);  
 
         // \App\Models\User::factory()->create([
