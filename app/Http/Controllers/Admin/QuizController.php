@@ -90,7 +90,7 @@ class QuizController extends Controller
     public function update(QuizUpdateRequest $request,Quiz $quiz)
     {
         $quiz->update($request->except(['_method','_token']));
-        return redirect()->back()->withSuccess('Quiz güncelleme işlemi başarı ile gerçekleştirildi.'); 
+        return redirect()->route('quizzes.index')->withSuccess('Quiz güncelleme işlemi başarı ile gerçekleştirildi.'); 
     }
 
     /**

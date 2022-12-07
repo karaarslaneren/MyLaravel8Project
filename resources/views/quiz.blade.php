@@ -2,8 +2,8 @@
     <x-slot name="header">
         {{$quiz->title}}
     </x-slot>
-    <div class="card">
-        <div class="card-body">
+    <div class="grid grid-cols-1">
+        <div class="grid grid-cols-1">
             <form method="POST" action="{{route('quiz.result',$quiz->slug)}}">
                 @csrf
                 @foreach($quiz->questions as $question)
@@ -15,6 +15,7 @@
                         
                     @endif
                     @foreach($question->answers as $answer)
+                    <div class="grid grid-cols-2">
                         <div class="form-check"> 
                             <input class="form-check-input" type="radio" name="{{$question->id}}" id="quiz{{$question->id}}1" value="answer1" required>
                             <label class="form-check-label" for="quiz{{$question->id}}1">
@@ -39,6 +40,7 @@
                                 {{$answer->answer4}}
                             </label>
                         </div>
+                    </div>
                     @endforeach
                         <hr>
                 @endforeach
