@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('sweetalert::alert')
 	<x-slot name="header">Quiz Oluştur</x-slot>
 	<div class="card">
         <div class="card-body">

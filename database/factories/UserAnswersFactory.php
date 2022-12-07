@@ -17,7 +17,7 @@ class UserAnswersFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'=>rand(1,5),
+            'user_id'=>rand(2,5),
             'question_id'=>rand(1,100),
             'answer'=>'answer'.rand(1,4),
         ];

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Admin\QuestionController;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,7 @@ use App\Http\Controllers\Admin\QuestionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.register');
 });
 
 Route::group(['middleware' => 'auth'],function(){
@@ -33,4 +35,7 @@ Route::group(['middleware' => ['auth','isAdmin'],'prefix' => 'admin'],function()
 {
     Route::resource('/quizzes', QuizController::class);
     Route::resource('/questions', QuestionController::class);
+    Route::get('/stats',[MainController::class,'stats'])->name('admin.stats');
+    Route::get('quiz/{id}/createquestion',[QuizController::class,'createQuestion'])->name('question_create');
 });
+

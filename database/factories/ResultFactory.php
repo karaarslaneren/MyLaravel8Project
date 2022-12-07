@@ -9,16 +9,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ResultFactory extends Factory
 {
-    protected $model =Result::class;
+    
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+    
     public function definition()
     {
         return [
-            'user_id'=>rand(1,5),
+            'user_id'=>rand(2,5),
             'quiz_id'=>rand(1,10),
             'point'=>rand(0,100),
             'correct_answer'=>rand(1,20),

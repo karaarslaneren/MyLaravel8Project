@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('sweetalert::alert')
 	<x-slot name="header">Quiz Güncelle</x-slot>
 	<div class="card">
         <h3 class="text-danger">Quiz Durumunu Aktif Olarak Güncellenebilmesi İçin Quize Ait En Az 5 Soru olmalıdır.</h3>

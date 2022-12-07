@@ -9,6 +9,7 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Http\Requests\QuizCreateRequest;
 use App\Http\Requests\QuizUpdateRequest;
+use Carbon\Carbon;
 
 
 class QuizController extends Controller
@@ -21,7 +22,7 @@ class QuizController extends Controller
     public function index(Request $request)
     {
         $quizzes = Quiz::withCount('questions');
-        if($request -> get('title'))
+        if($request->get('title'))
         {
             $quizzes= $quizzes->where('title','LIKE',"%".$request->get('title')."%");
         }
@@ -52,7 +53,7 @@ class QuizController extends Controller
     public function store(QuizCreateRequest $request)
     {
         Quiz::create($request->post());
-        return redirect()->route('quizzes.index')->withSuccess('Quiz Başarıyla Oluşturuldu');
+        return redirect()->back()->withSuccess('Quiz Başarıyla Oluşturuldu');
     }
 
     /**
@@ -89,7 +90,7 @@ class QuizController extends Controller
     public function update(QuizUpdateRequest $request,Quiz $quiz)
     {
         $quiz->update($request->except(['_method','_token']));
-        return redirect()->route('quizzes.index')->withSuccess('Quiz güncelleme işlemi başarı ile gerçekleştirildi.'); 
+        return redirect()->back()->withSuccess('Quiz güncelleme işlemi başarı ile gerçekleştirildi.'); 
     }
 
     /**
@@ -102,5 +103,10 @@ class QuizController extends Controller
     {
         $quiz->delete();
         return redirect()->route('quizzes.index')->withSuccess('Quiz silme işlemi başarı ile gerçekleştirildi.'); 
+    }
+    public function createQuestion($id)
+    {
+        $quiz = Quiz::find($id)->first();
+        return view('admin.quiz.question_create',compact('quiz'));
     }
 }

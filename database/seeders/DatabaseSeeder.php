@@ -17,16 +17,11 @@ class DatabaseSeeder extends Seeder
     {
       
       $this->call([
-          UserSeeder::class,
-          QuizSeeder::class,
-          QuestionSeeder::class,
-          UseranswersSeeder::class,
-          ResultSeeder::class,
+            UserSeeder::class,
+            QuizSeeder::class,
+            QuestionSeeder::class,
+            ResultSeeder::class,
+            UseranswersSeeder::class,
       ]);  
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

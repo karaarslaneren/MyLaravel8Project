@@ -14,7 +14,8 @@ class QuizFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model =Quiz::class;
+    protected $model = Quiz::class;
+    
     public function definition()
     {
         $title = $this->faker->sentence(rand(3,7));

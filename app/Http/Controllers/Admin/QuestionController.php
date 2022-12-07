@@ -17,9 +17,14 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::paginate(20);
+        $questions = Question::orderByDesc('id');
+        if($request->get('question'))
+        {
+            $questions = $questions->where('question','LIKE',"%".$request->get('question')."%");
+        }
+        $questions = $questions->paginate(20);
         return view('admin.question.list',compact('questions'));
     }
 
@@ -42,7 +47,6 @@ class QuestionController extends Controller
      */
     public function store(QuestionCreateRequest $request)
     {
-
         if($request->hasFile('image'))
         {
             $fileName = Str::slug($request->question).'.'.$request->image->extension();
@@ -50,8 +54,6 @@ class QuestionController extends Controller
             $request->image->move(public_path('/uploads'),$fileName);
             $request->merge(['image'=>$fileNameWithUpload]);
         }
-        
-        
         $question_id = Question::create($request->post());
         Answer::create(
             [   
@@ -88,7 +90,7 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        $question = Question::find($id) ?? abort(404,'Quiz Bulunamadı');
+        $question = Question::find($id) ?? abort(404,'Question Bulunamadı');
         return view('admin.question.edit',compact('question'));
     }
 
@@ -133,8 +135,9 @@ class QuestionController extends Controller
      */
     public function destroy(question $question)
     {
+        $quiz = Quiz::find($question->quiz_id);
         $question->delete();
-        return redirect()->route('questions.index')->withSuccess('Soru silme işlemi başarı ile gerçekleştirildi.');
+        return redirect()->route('questions.index',compact('quiz'))->withSuccess('Soru silme işlemi başarı ile gerçekleştirildi.');
  
     }
 }

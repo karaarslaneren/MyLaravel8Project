@@ -2,60 +2,67 @@
     <x-slot name="header">
     Sorular
     </x-slot>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">
+    @include('sweetalert::alert')
+    <div class="grid grid-cols-1 ">
+        <div class="mb-2 grid grid-cols-1 ">
+            <div class="grid grid-cols-2 mb-2">
+                <form method="GET" action=" ">
+                <input type="text" name="question" placeholder="Soru Adı" class="form-control" value="{{request()->get('question')}}">
+                @if(request()->get('question'))
+                    <div>
+                        <a href="{{route('questions.index')}}" class="btn btn-secondary w-100">Sıfırla</a>
+                    </div>
+                 @endif
+            </form>
+            <h5 class="mb-4 text-right">
                 <a href="{{route('questions.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Yeni Ekle</a>
                 <a href="{{route('quizzes.index')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
             </h5>
+            </div>
+            
+            @foreach($questions as $question)
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-2 mt-2">
+                    <div class="grid-col">
+                        <div class="grid-col text-center mt-2">
+                            Quiz Id
+                        </div>
+                        <div class="grid-col mt-2 text-center">
+                            {{$question->quiz_id}}
+                        </div>
+                    </div>
+                    <div class="grid-col">
+                        <div class="grid-col text-center mt-2">
+                            Soru
+                        </div>
+                        <div class="grid-col mt-2">
+                        {{ $question->question}}
+                        </div>
+                    </div>
+                    <div class="grid-col text-center mt-2">
+                        <div class="dropdown show mt-2">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                İşlemler
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li class="dropdown-item ">
+                                    <a href="{{route('questions.edit',$question->id)}}" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Düzenle
+                                    </a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <form method="POST" action="{{route('questions.destroy',[$question->id])}}" >
+                                    @method('DELETE')
+                                    @csrf
+                                        <button type="submit" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sil</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            @endforeach
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Quiz Id</th>
-                    <th scope="col">Soru</th>
-                    <th scope="col">Fotoğraf</th>
-                    <th scope="col"style="width:75px;">1. Cevap</th>
-                    <th scope="col"style="width:75px;">2. Cevap</th>
-                    <th scope="col"style="width:75px;">3. Cevap</th>
-                    <th scope="col"style="width:75px;">4. Cevap</th>
-                    <th scope="col">Doğru Cevap</th>
-                    <th scope="col">Düzenle</th>
-                    <th scope="col">Sil</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($questions as $question)
-                    <tr>
-                        <td>{{$question->quiz_id}}</td>
-                        <td>{{ $question->question}}</td>
-                        <td>
-                            @if($question->image)
-                                <a href="{{asset($question->image)}}" class="btn btn-sm btn-info text-white">Görüntüle</a>
-                            @endif
-                        </td>
-                        @foreach($question->answers as $answer)
-                            <td>{{ $answer->answer1 ?? null }}</td>
-                            <td>{{ $answer->answer2 ?? null }}</td>
-                            <td>{{ $answer->answer3 ?? null }}</td>
-                            <td>{{ $answer->answer4 ?? null }}</td>
-                            <td class="text-success">{{ substr($answer->correct_answer,-1) }}. Cevap</td>
-                        @endforeach
-                        <td>
-                            <a href="{{route('questions.edit',[$question->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-pen-fancy"></i></a>                   
-                        </td>
-                        <td> 
-                            <form method="POST" action="{{route('questions.destroy',[$question->id])}}" >
-                            @method('DELETE')
-                            @csrf
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        
         {{$questions->links()}}
     </div>
 </x-app-layout>

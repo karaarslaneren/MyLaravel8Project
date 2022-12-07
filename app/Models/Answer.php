@@ -10,8 +10,7 @@ class Answer extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $fillable=
-    [
+    protected $fillable=[
         'question_id',
         'answer1',
         'answer2',
