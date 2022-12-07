@@ -38,7 +38,9 @@
                 @foreach($quizzes as $quiz)
                     <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                         <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $quiz->id }}
+                            <a href="{{route('quiz.detail',$quiz->slug)}}" class="list-group-item list-group-item-action flex-column align-items-start"> 
+                                {{$quiz->title }} 
+                            </a>  
                         </th>
                         <td class="py-4 px-6">
                             {{ $quiz->title }}

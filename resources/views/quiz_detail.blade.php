@@ -2,16 +2,20 @@
     <x-slot name="header">
         {{$quiz->title}}
     </x-slot>
-    <a href="{{route('dashboard')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
+    <a href="{{route('dashboard')}}" class="btn btn-sm btn-secondary mb-4"><i class="fa fa-reply"></i> Geri Dön</a>
     <div class="grid grid-cols-1">
         <div>
             @if($quiz->myResult == null)
-                <div class="grid grid-cols-1 mb-4">
-                    {{$quiz->description}}
-                    <a href="{{route('quiz.join',$quiz->slug)}}" class="btn btn-primary btn-lg btn-block w-100">Quize Katıl</a>
-                </div>
+                @if($quiz->status == 'publish')
+                    <div class="grid grid-cols-1 mb-4">
+                        {{$quiz->description}}
+                        <a href="{{route('quiz.join',$quiz->slug)}}" class="btn btn-primary btn-lg btn-block w-100 mb-4">Quize Katıl</a>
+                    </div>
+                @else
+                    <a href="{{route('quizzes.edit',$quiz->id)}}" class="btn btn-primary btn-lg btn-block w-100 mb-4">Quiz Durumunu Değiştir</a>
+                @endif()
             @elseif($quiz->finished_at>now());
-                <div class="grid grid-cols-1">
+                <div class="grid grid-cols-1 mb-4">
                     Sınavın Katılma Süresi Dolmuştur
                 </div>
             @else
