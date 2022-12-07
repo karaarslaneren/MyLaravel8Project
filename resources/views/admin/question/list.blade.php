@@ -7,19 +7,19 @@
         <div class="mb-2 grid grid-cols-1 ">
             <div class="grid grid-cols-2 mb-2">
                 <form method="GET" action=" ">
-                <input type="text" name="question" placeholder="Soru Adı" class="form-control" value="{{request()->get('question')}}">
-                @if(request()->get('question'))
-                    <div>
-                        <a href="{{route('questions.index')}}" class="btn btn-secondary w-100">Sıfırla</a>
-                    </div>
-                 @endif
-            </form>
+                    <input type="text" name="question" placeholder="Soru Adı" class="form-control" value="{{request()->get('question')}}">
+                    @if(request()->get('question'))
+                        <div>
+                            <a href="{{route('questions.index')}}" class="btn btn-secondary w-100">Sıfırla</a>
+                        </div>
+                     @endif
+                </form>
             <h5 class="mb-4 text-right">
                 <a href="{{route('questions.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Yeni Ekle</a>
                 <a href="{{route('quizzes.index')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
             </h5>
             </div>
-            
+    
             @foreach($questions as $question)
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-2 mt-2">
                     <div class="grid-col">
