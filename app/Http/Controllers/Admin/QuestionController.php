@@ -19,7 +19,7 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        $questions = Question::orderByDesc('id');
+        $questions = Question::orderBy('id');
         if($request->get('question'))
         {
             $questions = $questions->where('question','LIKE',"%".$request->get('question')."%");
@@ -103,6 +103,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionUpdateRequest $request,question $question)
     {
+        dd($request->all());
         if($request->hasFile('image'))
         {
             $fileName = Str::slug($request->question).'.'.$request->image->extension();
@@ -113,9 +114,11 @@ class QuestionController extends Controller
         }
 
         Question::whereId($question->id)->update(
-            ['question' => $request->question,
-            'image' => $path ?? $question->image,
-            'quiz_id'=> $question->quiz_id]); 
+            [
+                'question' => $request->question,
+                'image' => $path ?? $question->image,
+                'quiz_id'=> $question->quiz_id,
+                'status'=>1]); 
         $question->answers()->first()->update(
             [
                 'answer1'=>$request->answer1,
@@ -139,5 +142,48 @@ class QuestionController extends Controller
         $question->delete();
         return redirect()->route('questions.index',compact('quiz'))->withSuccess('Soru silme işlemi başarı ile gerçekleştirildi.');
  
+    }
+    public function waitingQuestion(Request $request)
+    {
+        $questions = Question::whereStatus(0);
+        $questions = $questions->paginate(20);
+        return view('admin.question.waitingQuestion',compact('questions'));
+    }
+    public function userQuestion(Request $request)
+    {
+        if(auth()->user()->type == 'user'){
+            if($request->hasFile('image'))
+        {
+            $fileName = Str::slug($request->question).'.'.$request->image->extension();
+            $fileNameWithUpload = 'uploads/'.$fileName;
+            $request->image->move(public_path('/uploads'),$fileName);
+            $image = $request->merge(['image'=>$fileNameWithUpload]);
+            $path = 'uploads/'.$fileName;
+        }
+
+        $question_id = Question::create([
+            'question' => $request->question,
+            'quiz_id' => $request->quiz_id,
+            'status' => 0,
+        ]);
+        Answer::create([   
+                'question_id' => $question_id->id,
+                'answer1' => $request->answer1,
+                'answer2' => $request->answer2,
+                'answer3' => $request->answer3,
+                'answer4' => $request->answer4,
+                'image' => $request->image,
+                'correct_answer' => $request->correct_answer
+            ]);
+        return redirect()->route('dashboard')->withSuccess('Soru Talebi Başarıyla Alındı');
+        };
+    }
+    public function soruOnay($id)
+    {
+        $question = Question::find($id);
+        $test = $question->update([
+            'status' => 1
+        ]);
+        return redirect()->back()->withSuccess('Soruyu Onayladınız');
     }
 }

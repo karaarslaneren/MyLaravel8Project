@@ -7,6 +7,15 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         Anasayfa
                     </x-jet-nav-link>
+                    @if(auth()->user()->type == 'user')
+                        <x-jet-nav-link href="{{ route('userCreateQuestion') }}" :active="request()->routeIs('dashboard')">
+                            Soru Talebi Oluştur
+                        </x-jet-nav-link>
+                    @else
+                        <x-jet-nav-link href="{{ route('waitingquestion') }}" :active="request()->routeIs('dashboard')">
+                        Onay Bekleyen Sorular
+                    </x-jet-nav-link>
+                    @endif
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">

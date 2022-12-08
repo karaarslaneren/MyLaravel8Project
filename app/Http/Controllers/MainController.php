@@ -74,4 +74,9 @@ class MainController extends Controller
         $quizzes = $quizzes->paginate(5);
         return view('admin.stats',compact('quizzes'));
     }
+    public function userCreateQuestion(Request $request)
+    {
+        $quizzes = Quiz::all();
+        return view('user.question.create',compact('quizzes'));
+    }
 }

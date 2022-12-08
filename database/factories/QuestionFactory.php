@@ -20,6 +20,7 @@ class QuestionFactory extends Factory
         return [
             'quiz_id' =>rand(1,10),
             'question'=>$this->faker->sentence(rand(3,7)),
+            'status'=>1,
 
         ];
     }

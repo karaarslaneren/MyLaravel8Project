@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('quiz/detay/{slug}',[MainController::class,'quiz_detail'])->name('quiz.detail');
     Route::get('quiz/{slug}',[MainController::class,'quiz'])->name('quiz.join');
     Route::post('quiz/{slug}/result',[MainController::class,'result'])->name('quiz.result');
+    Route::get('user/questions/create',[MainController::class,'userCreateQuestion'])->name('userCreateQuestion');
+    Route::post('user/questions/createrequest',[QuestionController::class,'userQuestion'])->name('userQuestion');
+    Route::post('user/questions/onay/{id}',[QuestionController::class,'soruOnay'])->name('soruOnay');
 });
 
 
@@ -37,5 +40,6 @@ Route::group(['middleware' => ['auth','isAdmin'],'prefix' => 'admin'],function()
     Route::resource('/questions', QuestionController::class);
     Route::get('/stats',[MainController::class,'stats'])->name('admin.stats');
     Route::get('quiz/{id}/createquestion',[QuizController::class,'createQuestion'])->name('question_create');
+    Route::get('/waitingQuestion',[QuestionController::class,'waitingQuestion'])->name('waitingquestion');
 });
 

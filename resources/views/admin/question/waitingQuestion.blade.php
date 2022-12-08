@@ -1,23 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-    Sorular
+    Onay Bekleyen Sorular
     </x-slot>
     @include('sweetalert::alert')
     <div class="grid grid-cols-1 ">
         <div class="mb-2 grid grid-cols-1 ">
-            <div class="grid grid-cols-2 mb-2">
-                <form method="GET" action=" ">
-                    <input type="text" name="question" placeholder="Soru Adı" class="form-control" value="{{request()->get('question')}}">
-                    @if(request()->get('question'))
-                        <div>
-                            <a href="{{route('questions.index')}}" class="btn btn-secondary w-100">Sıfırla</a>
-                        </div>
-                     @endif
-                </form>
+            <div class="grid grid-cols-1 mb-2">
             <h5 class="mb-4 text-right">
-                <a href="{{route('questions.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Yeni Ekle</a>
-                <a href="{{route('quizzes.index')}}" class="btn btn-sm btn-secondary"><i class="fa-regular fa-circle-left"></i> Geri Dön</a>
-                <a href="{{route('waitingquestion')}}" class="btn btn-sm btn-secondary"><i class="fa-regular fa-circle-right"></i> Onay Bekleyen Sorular</a>
+                <a href="{{route('questions.index')}}" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Geri Dön</a>
             </h5>
             </div>
     
@@ -46,9 +36,11 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <li class="dropdown-item ">
-                                    <a href="{{route('questions.edit',$question->id)}}" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Düzenle
-                                    </a>
+                                    <form action="{{route('soruOnay',$question->id)}}" method="POST">
+                                    @csrf
+
+                                        <button type="submit" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Onayla</button>
+                                    </form>
                                 </li>
                                 <li class="dropdown-item">
                                     <form method="POST" action="{{route('questions.destroy',[$question->id])}}" >

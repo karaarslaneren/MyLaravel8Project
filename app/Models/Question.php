@@ -14,7 +14,8 @@ class Question extends Model
     [
         'question',
         'image',
-        'quiz_id'
+        'quiz_id',
+        'status',
 
     ];
     protected $appends = ['true_percent'];

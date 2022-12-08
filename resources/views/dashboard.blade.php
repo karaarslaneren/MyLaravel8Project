@@ -2,6 +2,7 @@
     <x-slot name="header">
         Anasayfa
     </x-slot>
+    @include('sweetalert::alert')
     <div class="grid grid-cols-1 gap-4 mb-10" >
         @forelse($quizzes as $quiz)
             @if(!$quiz->myResult == null)
