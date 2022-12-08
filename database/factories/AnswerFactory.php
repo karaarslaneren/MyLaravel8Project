@@ -18,7 +18,12 @@ class AnswerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'question_id' =>$this->faker->unique()->numberBetween(1,100),
+            'answer1'=>$this->faker->sentence(rand(3,7)),
+            'answer2'=>$this->faker->sentence(rand(3,7)),
+            'answer3'=>$this->faker->sentence(rand(3,7)),
+            'answer4'=>$this->faker->sentence(rand(3,7)),
+            'correct_answer'=>'answer'.rand(1,4),
         ];
     }
 }

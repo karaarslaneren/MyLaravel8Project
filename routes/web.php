@@ -41,5 +41,7 @@ Route::group(['middleware' => ['auth','isAdmin'],'prefix' => 'admin'],function()
     Route::get('/stats',[MainController::class,'stats'])->name('admin.stats');
     Route::get('quiz/{id}/createquestion',[QuizController::class,'createQuestion'])->name('question_create');
     Route::get('/waitingQuestion',[QuestionController::class,'waitingQuestion'])->name('waitingquestion');
+    Route::post('/quizzes/open/{id}',[QuizController::class,'quizAc'])->name('quizAc');
+    Route::post('/quizzes/close/{id}',[QuizController::class,'quizKapa'])->name('quizKapa');
 });
 

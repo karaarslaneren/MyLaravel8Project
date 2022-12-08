@@ -117,6 +117,22 @@
                                                 Düzenle
                                             </a>
                                         </li>
+                                        
+                                        @if($quiz->status == 'publish') 
+                                            <li class="dropdown-item">
+                                                <form method="POST" action="{{route('quizKapa',[$quiz->id])}}" >
+                                                @csrf
+                                                    <button type="submit" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Quiz'i Pasif Yap</button>
+                                                </form>
+                                            </li>
+                                        @else
+                                            <li class="dropdown-item">
+                                                <form method="POST" action="{{route('quizAc',[$quiz->id])}}" >
+                                                @csrf
+                                                    <button type="submit" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Quiz'i Aktif Yap</button>
+                                                </form>
+                                            </li>
+                                        @endif
                                         <li class="dropdown-item">
                                             <form method="POST" action="{{route('quizzes.destroy',[$quiz->id])}}" >
                                             @method('DELETE')

@@ -2,6 +2,7 @@
     <x-slot name="header">
         {{$quiz->title}}
     </x-slot>
+    @include('sweetalert::alert')
     <a href="{{route('dashboard')}}" class="btn btn-sm btn-secondary mb-4"><i class="fa fa-reply"></i> Geri Dön</a>
     <div class="grid grid-cols-1">
         <div>

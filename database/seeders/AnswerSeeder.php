@@ -14,6 +14,6 @@ class AnswerSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Models\Answer::factory(100)->create();
     }
 }

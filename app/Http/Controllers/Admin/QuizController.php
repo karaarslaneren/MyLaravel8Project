@@ -109,4 +109,16 @@ class QuizController extends Controller
         $quiz = Quiz::find($id)->first();
         return view('admin.quiz.question_create',compact('quiz'));
     }
+    public function quizAc(Request $request){
+        Quiz::find($request->id)->update([
+            'status'=>'publish'
+        ]);
+        return redirect()->route('quizzes.index')->withSuccess('Quiz Durumu Aktif Olarak Değiştirildi.');
+    }
+    public function quizKapa(Request $request){
+        Quiz::find($request->id)->update([
+            'status'=>'passive'
+        ]);
+        return redirect()->route('quizzes.index')->withSuccess('Quiz Durumu Pasif Olarak Değiştirildi.');
+    }
 }

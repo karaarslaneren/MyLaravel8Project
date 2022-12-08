@@ -34,14 +34,7 @@ class Quiz extends Model
         return null;
     }
     public function questions(){
-      return $this->hasManyThrough(
-            Question::class,
-            Answer::class,
-            'question_id',
-            'quiz_id',
-            'id',
-            'id',
-        );
+        return $this->hasMany(Question::class,'quiz_id','id');
     }
     public function sluggable(): array
     {
