@@ -24,17 +24,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-2 mt-2">
                     <div class="grid-col">
                         <div class="grid-col text-center mt-2">
-                            Quiz Id
+                            Quiz Bilgileri
                         </div>
                         <div class="grid-col mt-2 text-center">
-                            {{$question->quiz_id}}
+                            {{$question->quiz_id}} {{$question->quiz->title}}
                         </div>
                     </div>
                     <div class="grid-col">
                         <div class="grid-col text-center mt-2">
                             Soru
                         </div>
-                        <div class="grid-col mt-2">
+                        <div class="grid-col mt-2 text-center">
                         {{ $question->question}}
                         </div>
                     </div>
