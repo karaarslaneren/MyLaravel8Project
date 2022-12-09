@@ -103,7 +103,6 @@ class QuestionController extends Controller
      */
     public function update(QuestionUpdateRequest $request,question $question)
     {
-        dd($request->all());
         if($request->hasFile('image'))
         {
             $fileName = Str::slug($request->question).'.'.$request->image->extension();
