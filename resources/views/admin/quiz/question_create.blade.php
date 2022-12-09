@@ -14,7 +14,7 @@
             		<input type="file" name="image" class="form-control">
             	</div>
                 <div class="form-group ">
-                    <select name="quiz_id">
+                    <select name="quiz_id" >
                         <option value="{{$quiz->id}}">{{$quiz->id}}-{{$quiz->title}}</option>
                     </select>
                 </div>

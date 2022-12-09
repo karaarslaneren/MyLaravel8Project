@@ -18,15 +18,6 @@
                             </label>
                             <input class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="file" name="image" placeholder="180" />
                         </div>
-
-                        <div class="grid items-center mt-4 gap-x-2">
-                            <select name="quiz_id">
-                                <option>Quiz Seçiniz.</option>
-                                    @foreach($quizzes as $quiz)
-                                    <option value="{{$quiz->id}}">{{$quiz->id}}-{{$quiz->title}}</option>
-                                    @endforeach
-                            </select>
-                        </div>
                         <div class="grid grid-cols-2 mt-4">
                             <div class="grid mr-4">
                                 <label class="text-center">1.Cevap</label>

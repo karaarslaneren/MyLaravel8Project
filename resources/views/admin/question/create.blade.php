@@ -20,10 +20,10 @@
                         </div>
 
                         <div class="grid items-center mt-4 gap-x-2">
-                            <select name="quiz_id">
+                            <select>
                                 <option>Quiz Seçiniz.</option>
                                     @foreach($quizzes as $quiz)
-                                    <option value="{{$quiz->id}}">{{$quiz->id}}-{{$quiz->title}}</option>
+                                    <option name="quiz_id" value="{{$quiz->id}}">{{$quiz->id}}-{{$quiz->title}}</option>
                                     @endforeach
                             </select>
                         </div>

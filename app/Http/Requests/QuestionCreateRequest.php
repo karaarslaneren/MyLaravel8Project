@@ -28,6 +28,7 @@ class QuestionCreateRequest extends FormRequest
         return [
             'question' => 'required|min:3', 
             'image' => 'image|nullable|max:5120|mimes:jpg,jpeg,png',
+            'quiz_id' => 'required',
             'answer1' => 'required', 
             'answer2' => 'required', 
             'answer3' => 'required', 
@@ -41,6 +42,7 @@ class QuestionCreateRequest extends FormRequest
         return [
             'question' => 'Soru', 
             'image' => 'Soru Fotoğrafı',
+            'quiz_id' => 'Quiz Id',
             'answer1' => '1.Cevap',
             'answer2' => '2.Cevap', 
             'answer3' => '3.Cevap', 

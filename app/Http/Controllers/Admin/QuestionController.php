@@ -54,7 +54,7 @@ class QuestionController extends Controller
             $request->image->move(public_path('/uploads'),$fileName);
             $request->merge(['image'=>$fileNameWithUpload]);
         }
-        $question_id = Question::create($request->post());
+        $question_id = Question::create([$request->post()]);
         Answer::create(
             [   
                 'question_id' => $question_id->id,
@@ -63,7 +63,7 @@ class QuestionController extends Controller
                 'answer3' => $request->answer3,
                 'answer4' => $request->answer4,
                 'image' => $request->image,
-                'correct_answer' => $request->correct_answer
+                'correct_answer' => $request->correct_answer,
             ]);
         return redirect()->route('questions.index')->withSuccess('Soru Başarıyla Eklendi');
 
@@ -151,6 +151,7 @@ class QuestionController extends Controller
     }
     public function userQuestion(Request $request)
     {
+        
         if(auth()->user()->type == 'user'){
             if($request->hasFile('image'))
         {
@@ -160,10 +161,13 @@ class QuestionController extends Controller
             $image = $request->merge(['image'=>$fileNameWithUpload]);
             $path = 'uploads/'.$fileName;
         }
-
+        $quiz = Quiz::whereStatus('publish')->inRandomOrder()->limit(1)->get();
+        foreach ($quiz as $id) {
+            $quiz_id = $id->id;
+        }
         $question_id = Question::create([
             'question' => $request->question,
-            'quiz_id' => $request->quiz_id,
+            'quiz_id' => $quiz_id,
             'status' => 0,
         ]);
         Answer::create([   
